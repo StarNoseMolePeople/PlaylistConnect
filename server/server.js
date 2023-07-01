@@ -4,39 +4,22 @@ const path = require("path");
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const uri =
   "mongodb+srv://carlosfrev123:d3KkR6wrS8ZWDkQN@maindb.kcu0qnr.mongodb.net/";
+const db = require("./model.js");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const mainController = require("./controller.js");
+// const PORT = 3000;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
-async function run() {
-  try {
-    // Connect the client to the server (optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
 
-use("mainDB");
-db.users.insertOne({
-  username: "dummyUser",
-  password: "1234",
-  groupIDs: ["1"],
+mongoose.connection.once("open", () => {
+  console.log("Connected to Database");
 });
-console.log(db.users.find({ username: "dummyUser" }));
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, "../client")));
@@ -44,6 +27,30 @@ app.use(express.static(path.resolve(__dirname, "../client")));
 app.get("/", (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
 });
+
+// createUser
+app.post("/user", mainController.createUser, (req, res) => {
+  return res.status(200).json(res.locals.newUser);
+});
+app.post("/group", mainController.createGroup, (req, res) => {
+  return res.status(200).json(res.locals.newGroup);
+});
+app.post("/playlist", mainController.createPlaylist, (req, res) => {
+  return res.status(200).json(res.locals.newPlaylist);
+});
+
+// in body add user object that you want to get
+app.get("/user/:username", mainController.getUser,(req, res) => {
+  return res.status(200).json(res.locals.foundUser);
+});
+//localhost:3000/group/1
+app.get("/group/:groupID",mainController.getGroup ,(req, res) => {
+  return res.status(200).json(res.locals.foundGroup);
+});
+
+// app.get("/playlist",mainController.getPlaylist, (req, res) => {
+//   return res.status(200);
+// });
 
 if (process.env.NODE_ENV === "production") {
   // statically serve everything in the build folder on the route '/build'
@@ -55,6 +62,20 @@ if (process.env.NODE_ENV === "production") {
       .sendFile(path.join(__dirname, "../client/index.html"));
   });
 }
+
+// Global error handler
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: "Express error handler caught unknown middleware error",
+    status: 400,
+    message: { err: "An error occurred" },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
+});
+
+// app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
 
 app.listen(3000, () => {
   console.log("server started on 3000", process.env.NODE_ENV);
