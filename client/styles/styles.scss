@@ -1,0 +1,43 @@
+body {
+  background-color: gray;
+}
+h1 {
+  color: purple;
+}
+.main_section {
+  ul {
+    border: 5px solid powderblue;
+  }
+}
+.li_card {
+  list-style-type: none;
+  padding: 3px;
+  border-bottom: 3px solid azure;
+  .card_row {
+    display: flex;
+    p {
+      margin-right: 5px;
+      text-align: center;
+      width: 300px;
+      border-left: 2px solid palevioletred;
+    }
+    button {
+      margin-left: auto;
+    }
+  }
+  .card_row2 {
+    display: flex;
+    p {
+      margin-right: 3px;
+      text-align: center;
+      width: 230px;
+      border-right: 2px solid palevioletred;
+    }
+  }
+  span {
+    font-weight: bold;
+    font-size: 18px;
+    color: azure;
+    margin-left: 3px;
+  }
+}
