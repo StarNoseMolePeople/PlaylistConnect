@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import PlaylistDiv from './PlaylistDiv.jsx';
 const App = () => {
   return (
     <div>
-      <h1>Playlist</h1>
+      {/* pass down playlist array to props */}
+      <PlaylistDiv />
     </div>
   );
 };
