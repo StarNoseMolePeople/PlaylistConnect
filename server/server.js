@@ -38,7 +38,8 @@ app.post("/group", mainController.createGroup, (req, res) => {
 app.post("/playlist", mainController.createPlaylist, (req, res) => {
   return res.status(200).json(res.locals.newPlaylist);
 });
-
+app.post("/addGroup", mainController.addGroupToUser,(req, res) => {
+  return res.status(200).json(res.locals.groupArr)})
 // in body add user object that you want to get
 app.get("/user/:username", mainController.getUser,(req, res) => {
   return res.status(200).json(res.locals.foundUser);
