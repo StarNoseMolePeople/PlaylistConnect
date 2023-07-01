@@ -34,59 +34,18 @@ const PlaylistDiv = (props) => {
         groupID: '1',
         playlistOwner: 'Bezzy',
       },
-      {
-        playlistName: 'Bezzy Vibing',
-        description: 'Bezzy chillin',
-        genre: 'Jazz',
-        playlistID: '3gBwgPNiEUHacWPS4BD2w8',
-        playlistURL: 'https://open.spotify.com/playlist/3gBwgPNiEUHacWPS4BD2w8',
-        groupID: '1',
-        playlistOwner: 'Bezzy',
-      },
-      {
-        playlistName: 'Bezzy Vibing',
-        description: 'Bezzy chillin',
-        genre: 'Jazz',
-        playlistID: '3gBwgPNiEUHacWPS4BD2w8',
-        playlistURL: 'https://open.spotify.com/playlist/3gBwgPNiEUHacWPS4BD2w8',
-        groupID: '1',
-        playlistOwner: 'Bezzy',
-      },
-      {
-        playlistName: 'Bezzy Vibing',
-        description: 'Bezzy chillin',
-        genre: 'Jazz',
-        playlistID: '3gBwgPNiEUHacWPS4BD2w8',
-        playlistURL: 'https://open.spotify.com/playlist/3gBwgPNiEUHacWPS4BD2w8',
-        groupID: '1',
-        playlistOwner: 'Bezzy',
-      },
-      {
-        playlistName: 'Bezzy Vibing',
-        description: 'Bezzy chillin',
-        genre: 'Jazz',
-        playlistID: '3gBwgPNiEUHacWPS4BD2w8',
-        playlistURL: 'https://open.spotify.com/playlist/3gBwgPNiEUHacWPS4BD2w8',
-        groupID: '1',
-        playlistOwner: 'Bezzy',
-      },
     ];
-    generateAllPlaylist(dummyGroupPlaylist);
-  }, []);
+    generateAllPlaylist(props.currentPlaylist);
+  }, [props.currentPlaylist]);
   function generateAllPlaylist(arr) {
-    const playlists = arr.map((obj) => (
+    const playlists = arr?.map((obj) => (
       <Card playlist={obj} key={obj.playlistID} />
     ));
     setAllPlayList(playlists);
-    console.log(allPlayList);
+    //console.log(allPlayList);
   }
 
-  return (
-    <div>
-      <h1>Playlist</h1>
-      <div className="allplaylist-div div-round">{allPlayList}</div>
-    </div>
-  );
+  return <div className="allplaylist-div div-round">{allPlayList}</div>;
 };
 
 export default PlaylistDiv;

@@ -8,4 +8,4 @@ import styles from './styles/styles.scss';
 //render(<App />, document.getElementById('app'));
 const div = document.getElementById('app');
 const root = createRoot(div);
-root.render(<App />);
+root.render(<App className='app'/>);
