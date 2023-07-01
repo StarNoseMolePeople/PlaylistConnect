@@ -6,8 +6,8 @@ const playlistObjectSchema = new mongoose.Schema({
   description:{type: String, required: true},
   genre:{type: String},
   playlistID:{type: String, required: true},
-  playlistURL:{type: Number, required: true},
-  groupID: {type: Number, required: true},
+  playlistURL:{type: String, required: true},
+  groupID: {type: String, required: true},
   playlistOwner: {type: String, required: true}
 });
 
@@ -21,7 +21,7 @@ const userObjectSchema = new mongoose.Schema({
   username: {type: String, required: true},
   password: {type: String, require: true},
   // userID: {type: String, required: true},
-  groups: [groupObjectSchema]
+  groups: [String]
 });
 
 const mainObjectSchema = new mongoose.Schema({

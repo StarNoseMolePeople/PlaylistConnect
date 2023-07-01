@@ -75,19 +75,45 @@ const mainController = {
         });
       });
   },
+  addGroupToUser(req, res, next){
+    console.log('addGroupToUser')
+    const { username, groupID } = req.body;
+    UserObject.findOne({ username: username })
+      .then(user=>{
+        user.groups.push(groupID)
+        console.log(user.groups)
+        res.locals.groupArr = user.groups
+        return next();
+      })
+      .catch(err=>{
+        return next({
+          log: 'Error in controller.js/mainController.getGroup',
+          status: 400,
+          message: {err: 'ERROR: unable to retrieve group.'},
+        });
+      });
+  },
   
 
   // ---------------------------- PLAYLIST CONTROLLER ----------------------------
   // createPlaylist
   createPlaylist(req, res, next) {
-    const { description, playlistID, playlistURL, groupID, playlistOwner } = req.body
+    const { description, playlistID, playlistURL, groupID, playlistOwner } = req.body;
+    console.log(req.body)
+    // groups[groupID][playlist].push(create new object)
+    // 
+    // GroupObject.findOne({ groupID: groupID }).then
     PlaylistObject.create({ description, playlistID, playlistURL, groupID, playlistOwner })
         .then(playlist => {
+          GroupObject.findOne({ groupID: groupID }).then(obj => {
+            obj.playlists.push(playlist)
+          })
         res.locals.newPlaylist = playlist;
         console.log(playlist);
         return next();
       })
       .catch(err => {
+        console.log(err)
         return next({
           log: 'Error in controller.js/mainController.createPlaylist',
           status: 400,
