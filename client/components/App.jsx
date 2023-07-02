@@ -1,18 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import LeftDiv from './LeftDiv';
 import TopBar from './TopBar';
+import PlaylistDiv from './PlaylistDiv.jsx';
 
 const App = () => {
-  const [isUserOpen, setUserOpen] = useState(false)
-  const [isPlaylistOpen, setPlaylistOpen] = useState(false)
+  const [currentUser, setCurrentUser] = useState({});
+  const [currentPlaylist, setCurrentPlaylist] = useState([]);
+  function updatePlaylist(arr) {
+    setCurrentPlaylist(arr);
+  }
+  useEffect(() => {
+    async function getUser() {
+      const user = await fetch('http://localhost:3000/user/dummyUser1');
+      const newUser = await user.json();
+      setCurrentUser(newUser);
+    }
+    getUser();
+  }, []);
+  const [isUserOpen, setUserOpen] = useState(false);
+  const [isPlaylistOpen, setPlaylistOpen] = useState(false);
   return (
-    <div className = 'total-div'style={{display: 'flex', flexDirection:'col', height: '90vh'}}>
-      <LeftDiv isUserOpen={isUserOpen} setUserOpen={setUserOpen}/>
-      
-      <div className='main-div'>
-          <TopBar isPlaylistOpen={isPlaylistOpen} setPlaylistOpen={setPlaylistOpen}/>
+    <div>
+      {/* pass down playlist array to props */}
+      <div
+        className="total-div"
+        style={{ display: 'flex', flexDirection: 'col', height: '90vh' }}
+      >
+        <LeftDiv
+          isUserOpen={isUserOpen}
+          setUserOpen={setUserOpen}
+          currentUser={currentUser}
+        />
+
+        <div className="main-div">
+          <TopBar
+            isPlaylistOpen={isPlaylistOpen}
+            setPlaylistOpen={setPlaylistOpen}
+            updatePlaylist={updatePlaylist}
+          />
           {/* render cards here */}
-          <div className='div-round playlist-div'>Playlst div</div>
+          <PlaylistDiv currentPlaylist={currentPlaylist} />
+        </div>
       </div>
     </div>
   );

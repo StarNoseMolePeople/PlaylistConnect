@@ -1,19 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import CreateUserPopup from './CreateUserPopup'
+import CreateUserPopup from './CreateUserPopup';
 const LeftDiv = (props) => {
-  console.log(props)
+  console.log('this is the currentUser', props.currentUser);
+  const [allGroups, getallGroups] = useState();
   const dummObj = {
-    username: 'test'
+    username: 'test',
+  };
+  console.log('this is gen groups', Array.isArray(props.currentUser.groups));
+  useEffect(() => {
+    const arr = props.currentUser.groups;
+    console.log('loggin inside userEffect', arr);
+    generateAllPlaylist(arr);
+  }, [props.currentUser]);
+
+  function generateAllPlaylist(arr) {
+    function getGroup(id) {
+      console.log('pretend getting', id);
+    }
+    const groupDiv = arr?.map((id) => (
+      <div key={`groupID_${id}`} onClick={() => getGroup(id)}>
+        {id}
+      </div>
+    ));
+    getallGroups(groupDiv);
   }
   return (
     <div className="div-round left-div">
-      <h1>{dummObj.username}</h1>
-      <button className='div-round' onClick={() =>{ props.setUserOpen(true) }}>Create User</button>
-      <CreateUserPopup open={props.isUserOpen} onClose={() => props.setUserOpen(false)}>
-        Test PopUp
+      <h3>{props.currentUser.username}</h3>
+      {allGroups}
+      <button
+        className="div-round"
+        onClick={() => {
+          props.setUserOpen(true);
+        }}
+      >
+        Create User
+      </button>
+      <CreateUserPopup
+        open={props.isUserOpen}
+        onClose={() => props.setUserOpen(false)}
+      >
+        Testing PopUp
       </CreateUserPopup>
     </div>
   );
 };
 
-export default LeftDiv
+export default LeftDiv;
