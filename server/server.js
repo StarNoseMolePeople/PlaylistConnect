@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri =
-  'mongodb+srv://carlosfrev123:d3KkR6wrS8ZWDkQN@maindb.kcu0qnr.mongodb.net/';
+  '';
 const db = require('./model.js');
 const mongoose = require('mongoose');
 const cors = require('cors');
