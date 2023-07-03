@@ -103,11 +103,12 @@ const mainController = {
       });
   },
 
+ 
+
   // ---------------------------- PLAYLIST CONTROLLER ----------------------------
   // createPlaylist
   createPlaylist(req, res, next) {
-    const { description, playlistID, playlistURL, groupID, playlistOwner } =
-      req.body;
+    const { description, playlistID, playlistURL, groupID, playlistOwner, genre } = req.body;
     // groups[groupID][playlist].push(create new object)
     //
     // GroupObject.findOne({ groupID: groupID }).then
@@ -117,6 +118,7 @@ const mainController = {
       playlistURL,
       groupID,
       playlistOwner,
+      genre
     })
       .then((playlist) => {
         GroupObject.findOne({ groupID: groupID })
@@ -138,6 +140,72 @@ const mainController = {
         });
       });
   },
+
+  // FOR DELETING ALL - JUST FOR DEBUGGING AND ORGANIZATION PURPOSES
+
+
+  deleteAllUsers(req, res, next) {
+    console.log('deleteAllUsers')
+    UserObject.deleteMany({})
+      .then((users) =>
+      { 
+        console.log(users)
+        res.locals.deletedUsers = users
+        next()
+      })
+      .catch((err) => {
+        console.log(err)
+        return next({
+          log: 'Error in controller.js/mainController.deleteAllUsers',
+          status: 500,
+          message: { err: 'ERROR: unable to delete all users' },
+        })
+      })
+  },
+  deleteAllGroups(req, res, next) {
+    console.log('deleteAllGroups')
+    GroupObject.deleteMany({})
+      .then((groups) =>
+      { 
+        console.log(groups)
+        res.locals.deletedGroups = groups
+        next()
+      })
+      .catch((err) => {
+        console.log(err)
+        return next({
+          log: 'Error in controller.js/mainController.deleteAllGroups',
+          status: 500,
+          message: { err: 'ERROR: unable to delete all groups' },
+        })
+      })
+  },
+  
+  deleteAllPlaylists(req, res, next) {
+    console.log('deleteAllPlaylist')
+    PlaylistObject.deleteMany({})
+      .then((playlists) =>
+      { 
+        console.log(playlists)
+        res.locals.deletedPlaylists = playlists
+        next()
+      })
+      .catch((err) => {
+        console.log(err)
+        return next({
+          log: 'Error in controller.js/mainController.deleteAllPlaylists',
+          status: 500,
+          message: { err: 'ERROR: unable to delete all playlists' },
+        })
+      })
+  },
+
+
+  // add functionality to delete all playlists from a group
+
+  // deletePlaylist
+
+  // deleteAll for organization purposes
 
   // when adding playlist to group
   // need to find and update on group object ->

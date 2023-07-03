@@ -18,17 +18,17 @@ export default function TopBar({
       groupID: 1,
       playlistOwner: 'Jason',
     };
-    fetch('http://localhost:3000/playlist', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(temp),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => updatePlaylist(res));
+    // fetch('http://localhost:3000/playlist', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(temp),
+    // })
+      // .then((res) => {
+      //   return res.json();
+      // })
+      // .then((res) => updatePlaylist(res));
   }
   return (
     <div className="div-round top-bar">

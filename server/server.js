@@ -2,8 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri =
-  '';
+const uri ='mongodb+srv://carlosfrev123:d3KkR6wrS8ZWDkQN@maindb.kcu0qnr.mongodb.net/?retryWrites=true&w=majority';
 const db = require('./model.js');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -49,6 +48,23 @@ app.get('/user/:username', mainController.getUser, (req, res) => {
 app.get('/group/:groupID', mainController.getGroup, (req, res) => {
   return res.status(200).json(res.locals.foundGroup);
 });
+
+
+// // DELETE ALL GROUPS,PLAYLISTS, USERS
+  // deleteAllGroups
+app.delete('/group', mainController.deleteAllGroups, (req,res)=>{
+  return res.status(200).json(res.locals.deletedGroups);
+})
+// deleteAllUsers
+app.delete('/user', mainController.deleteAllUsers, (req,res)=>{
+  return res.status(200).json(res.locals.deletedUsers);
+})
+// deleteAllPlay
+app.delete('/playlist', mainController.deleteAllPlaylists, (req,res)=>{
+  return res.status(200).json(res.locals.deletedPlaylists);
+})
+
+
 
 // app.get("/playlist",mainController.getPlaylist, (req, res) => {
 //   return res.status(200);
