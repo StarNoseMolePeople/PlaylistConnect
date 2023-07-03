@@ -106,8 +106,14 @@ const mainController = {
   // ---------------------------- PLAYLIST CONTROLLER ----------------------------
   // createPlaylist
   createPlaylist(req, res, next) {
-    const { description, playlistID, playlistURL, groupID, playlistOwner } =
-      req.body;
+    const {
+      description,
+      playlistID,
+      playlistURL,
+      groupID,
+      playlistOwner,
+      genre,
+    } = req.body;
     // groups[groupID][playlist].push(create new object)
     //
     // GroupObject.findOne({ groupID: groupID }).then
@@ -117,6 +123,7 @@ const mainController = {
       playlistURL,
       groupID,
       playlistOwner,
+      genre,
     })
       .then((playlist) => {
         GroupObject.findOne({ groupID: groupID })
@@ -142,5 +149,24 @@ const mainController = {
   // when adding playlist to group
   // need to find and update on group object ->
   // access playlists array and push the newly created playlist object to that array.
+  // playlist/:groupID
+  getPlaylist(req, res, next) {
+    const groupID = req.query.playlistID;
+    console.log(req.query.playlistID);
+    GroupObject.findOne({ groupID: groupID })
+      .then((group) => {
+        res.locals.foundPlaylist = group.playlists;
+        console.log(group.playlists);
+        return next();
+      })
+      .catch((err) => {
+        console.log(err);
+        return next({
+          log: 'Error in controller.js/mainController.getPlaylist',
+          status: 400,
+          message: { err: 'ERROR: unable to retrieve user.' },
+        });
+      });
+  },
 }; // mainController end curly bracket (DO NOT DELETE)
 module.exports = mainController;

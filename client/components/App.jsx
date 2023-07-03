@@ -7,6 +7,7 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [currentPlaylist, setCurrentPlaylist] = useState([]);
   function updatePlaylist(arr) {
+    console.log(arr, ' this is the updated array .........');
     setCurrentPlaylist(arr);
   }
   useEffect(() => {
@@ -30,6 +31,7 @@ const App = () => {
           isUserOpen={isUserOpen}
           setUserOpen={setUserOpen}
           currentUser={currentUser}
+          updatePlaylist={updatePlaylist}
         />
 
         <div className="main-div">
@@ -39,7 +41,10 @@ const App = () => {
             updatePlaylist={updatePlaylist}
           />
           {/* render cards here */}
-          <PlaylistDiv currentPlaylist={currentPlaylist} />
+          <PlaylistDiv
+            currentPlaylist={currentPlaylist}
+            setCurrentPlaylist={setCurrentPlaylist}
+          />
         </div>
       </div>
     </div>

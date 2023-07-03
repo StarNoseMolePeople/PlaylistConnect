@@ -50,9 +50,9 @@ app.get('/group/:groupID', mainController.getGroup, (req, res) => {
   return res.status(200).json(res.locals.foundGroup);
 });
 
-// app.get("/playlist",mainController.getPlaylist, (req, res) => {
-//   return res.status(200);
-// });
+app.get('/playlist', mainController.getPlaylist, (req, res) => {
+  return res.status(200).json(res.locals.foundPlaylist);
+});
 
 if (process.env.NODE_ENV === 'production') {
   // statically serve everything in the build folder on the route '/build'
@@ -67,6 +67,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // Global error handler
 app.use((err, req, res, next) => {
+  console.log(err);
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 400,
