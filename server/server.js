@@ -48,8 +48,9 @@ app.get('/user/:username', mainController.getUser, (req, res) => {
 app.get('/group/:groupID', mainController.getGroup, (req, res) => {
   return res.status(200).json(res.locals.foundGroup);
 });
-
-
+app.get('/playlist', mainController.getPlaylist, (req, res) => {
+  return res.status(200).json(res.locals.foundPlaylist);
+});
 // // DELETE ALL GROUPS,PLAYLISTS, USERS
   // deleteAllGroups
 app.delete('/group', mainController.deleteAllGroups, (req,res)=>{
@@ -83,6 +84,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // Global error handler
 app.use((err, req, res, next) => {
+  console.log(err);
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 400,

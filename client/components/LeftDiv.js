@@ -15,10 +15,24 @@ const LeftDiv = (props) => {
 
   function generateAllPlaylist(arr) {
     function getGroup(id) {
-      console.log('pretend getting', id);
+      console.log('calling get palylist');
+      fetch(`http://localhost:3000/playlist?playlistID=${id}`)
+        .then((res) => {
+          console.log('there is a res');
+          return res.json();
+        })
+        .then((res) => {
+          console.log(res, 'hitting me');
+          props.updatePlaylist(res);
+          console.log(res);
+        });
     }
     const groupDiv = arr?.map((id) => (
-      <div key={`groupID_${id}`} onClick={() => getGroup(id)}>
+      <div
+        key={`groupID_${id}`}
+        id={`groupID_${id}`}
+        onClick={() => getGroup(id)}
+      >
         {id}
       </div>
     ));

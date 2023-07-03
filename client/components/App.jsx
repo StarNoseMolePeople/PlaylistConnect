@@ -7,11 +7,12 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [currentPlaylist, setCurrentPlaylist] = useState([]);
   function updatePlaylist(arr) {
+    console.log(arr, ' this is the updated array .........');
     setCurrentPlaylist(arr);
   }
   useEffect(() => {
     async function getUser() {
-      const user = await fetch('http://localhost:3000/user/dummyUser1');
+      const user = await fetch('http://localhost:3000/user/StarNoseMole');
       const newUser = await user.json();
       setCurrentUser(newUser);
     }
@@ -30,6 +31,7 @@ const App = () => {
           isUserOpen={isUserOpen}
           setUserOpen={setUserOpen}
           currentUser={currentUser}
+          updatePlaylist={updatePlaylist}
         />
 
         <div className="main-div">
@@ -39,7 +41,10 @@ const App = () => {
             updatePlaylist={updatePlaylist}
           />
           {/* render cards here */}
-          <PlaylistDiv currentPlaylist={currentPlaylist} />
+          <PlaylistDiv
+            currentPlaylist={currentPlaylist}
+            setCurrentPlaylist={setCurrentPlaylist}
+          />
         </div>
       </div>
     </div>

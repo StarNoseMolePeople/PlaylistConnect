@@ -25,10 +25,10 @@ export default function TopBar({
     //   },
     //   body: JSON.stringify(temp),
     // })
-      // .then((res) => {
-      //   return res.json();
-      // })
-      // .then((res) => updatePlaylist(res));
+    //   .then((res) => {
+    //     return res.json();
+    //   })
+    //   .then((res) => updatePlaylist(res));
   }
   return (
     <div className="div-round top-bar">
